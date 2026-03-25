@@ -2,12 +2,12 @@ import streamlit as st
 from chain import answer_question
 
 st.set_page_config(
-    page_title="ClimateIQ Zimbabwe",
+    page_title="ClimateIQ-zw",
     page_icon="zw",
     layout="wide"
 )
 
-st.title("🇿🇼 ClimateIQ Zimbabwe")
+st.title("ClimateIQ-zw")
 st.caption("AI-powered climate policy research assistant for Zimbabwe policymakers, government and NGOs")
 
 st.divider()

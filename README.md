@@ -1,4 +1,4 @@
-# 🇿🇼 ClimateIQ Zimbabwe
+# ClimateIQ-zw
 
 An AI-powered climate policy research assistant built for Zimbabwe policymakers, government agencies and NGOs.
 
