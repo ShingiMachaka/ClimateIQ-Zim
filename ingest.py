@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from pinecone import Pinecone, ServerlessSpec
+from langchain_pinecone import PineconeVectorStore
 
 load_dotenv()
 
@@ -30,19 +31,28 @@ def ingest_documents(pdf_folder="data"):
             print(f"Skipping unsupported file: {file}")
     
     if not docs:
-        print("No supported files found. Add PDFs or Word docs to data/ folder.")
+        print("No supported files found.")
         return
     
     print(f"Splitting {len(docs)} pages into chunks...")
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     chunks = splitter.split_documents(docs)
     
-    print(f"Embedding {len(chunks)} chunks... (this may take a few minutes)")
+    print(f"Embedding {len(chunks)} chunks and uploading to Pinecone...")
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-    vectorstore = Chroma.from_documents(chunks, embeddings, persist_directory="chroma_db")
     
-    print(f"Done! {len(chunks)} chunks stored in chroma_db/")
+    pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+    
+    PineconeVectorStore.from_documents(
+        chunks,
+        embeddings,
+        index_name="climateiq-zim",
+        pinecone_api_key=os.getenv("PINECONE_API_KEY")
+    )
+    
+    print(f"Done! {len(chunks)} chunks uploaded to Pinecone!")
 
 if __name__ == "__main__":
     ingest_documents()
+    
     
