@@ -3,9 +3,13 @@ from dotenv import load_dotenv
 import anthropic
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
+import streamlit as st
+
+
 
 load_dotenv()
 
+@st.cache_resource
 def load_retriever():
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     vectorstore = Chroma(
