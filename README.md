@@ -2,6 +2,8 @@
 
 An AI-powered climate policy research assistant built for Zimbabwe policymakers, government agencies and NGOs.
 
+https://climateiq-zim.streamlit.app/
+
 ## What it does
 ClimateIQ allows users to query a curated library of official Zimbabwe and international climate documents using natural language. It returns structured answers and policy briefs grounded in the actual documents.
 
